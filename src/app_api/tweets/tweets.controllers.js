@@ -20,9 +20,16 @@ function addNew(req, res){
     var author = req.body.author;
     var content = req.body.content;
 
+    if(!author || !content){
+   		_sendJsonResponse(res, 400, {
+   			"message": "author and content are required"
+   		});
+		return;
+    }
+
     var tweetTosave = {
-        author: req.body.author,
-        content: req.body.content
+        author: author,
+        content: content
     };
     
     // Query
