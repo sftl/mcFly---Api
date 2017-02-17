@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<h1>McFly Tweets Api</h1>
+	<div>
+		<dl>
+
+			<dt><b>Technologies:</b></dt>
+			<dd>
+				<ul>
+					<li>NodeJS</li>
+					<li>Express</li>
+					<li>Mongoose</li>
+				</ul>
+			</dd>
+			
+			<hr>
+
+			<dt><b>DDBB:</b></dt>
+			<dd>
+				<ul>
+					<li>MongoDB</li>
+				</ul>
+			</dd>
+
+			<hr>
+
+			<dt><b>Get All Tweets:</b></dt>
+			<dd>
+				<ul>
+					<li>Endpiont: <b>/api/tweets</b></li>
+					<li>Method: <b>GET</b></li>
+				</ul>
+			</dd>
+
+			<hr>
+
+			<dt><b>Get Tweets marked as Favorites:</b></dt>
+			<dd>
+				<ul>
+					<li>Endpiont: <b>/api/tweets/favorites</b></li>
+					<li>Method: <b>GET</b></li>
+				</ul>
+			</dd>
+
+			<hr>
+			
+			<dt><b>Get a Tweet by Id:</b></dt>
+			<dd>
+				<ul>
+					<li>Endpiont: <b>/api/tweets/{id}</b></li>
+					<li>where: "{id}" is the tweet id</li>
+					<li>Method: <b>GET</b></li>
+				</ul>
+			</dd>
+			
+			<hr>
+
+			<dt><b>Toogle a tweet as favorite:</b></dt>
+			<dd>
+				<ul>
+					<li>Endpiont: <b>/api/tweets/{id}</b></li>
+					<li>where: "{id}" is the tweet id</li>
+					<li>Method: <b>PUT</b></li>
+				</ul>
+			</dd>
+
+			<hr>
+
+			<dt><b>addNew:</b></dt>
+			<dd>
+				<ul>
+					<li>Endpiont: <b>/api/tweets</b></li>
+					<li>Method: <b>POST</b></li>
+					<li>body: <br> 
+							* "author": string | REQUIRED, <br>
+							* "content": string | REQUIRED 
+					</li>
+				</ul>
+			</dd>
+
+			<hr>
+			
+			<dt><b>Result:</b></dt>
+			<dd>All McFly Api results are JSON</dd>
+		</dl>
+	</div>
+</body>
+</html>

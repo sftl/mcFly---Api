@@ -1,0 +1,14 @@
+{
+  "browserSync": {
+    "proxy": "http://localhost:3000",
+    "port": 4000,
+    "notify": true
+  },
+   "dist":{
+    "destination" :"../dist/"
+  },
+  "nodemon": {
+    "ext": "js html",
+    "script": "./bin/www/"
+  }
+}
