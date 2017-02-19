@@ -19,7 +19,8 @@ var mongoose = require('mongoose');
 var gracefulShutdown;
 
 module.exports = function(){
-    // mongoose.Promise = global.Promise; ????
+    // https://github.com/Automattic/mongoose/issues/4291
+    // mongoose.Promise = global.Promise;
     
     /**
      * Using multiple databases

@@ -1,6 +1,6 @@
-var mongoose      = require('mongoose');
-var Tweet    = mongoose.model('tweet');
-var Module = {
+var mongoose = require('mongoose');
+var Tweet    = require("./tweets.model");
+var Module   = {
     addNew: addNew,
     getAll: getAll,
     getFavorites: getFavorites,
@@ -17,16 +17,8 @@ module.exports = Module;
  * @return json
  */
 function addNew(req, res){
-    var author = req.body.author;
-    var content = req.body.content;
-
-    if(!author || !content){
-   		_sendJsonResponse(res, 400, {
-   			"message": "author and content are required"
-   		});
-		return;
-    }
-
+    var author      = req.body.author;
+    var content     = req.body.content;
     var tweetTosave = {
         author: author,
         content: content

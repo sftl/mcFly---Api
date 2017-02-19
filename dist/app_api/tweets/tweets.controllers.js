@@ -1,6 +1,6 @@
-var mongoose      = require('mongoose');
-var Tweet    = mongoose.model('tweet');
-var Module = {
+var mongoose = require('mongoose');
+var Tweet    = require("./tweets.model");
+var Module   = {
     addNew: addNew,
     getAll: getAll,
     getFavorites: getFavorites,
@@ -17,12 +17,11 @@ module.exports = Module;
  * @return json
  */
 function addNew(req, res){
-    var author = req.body.author;
-    var content = req.body.content;
-
+    var author      = req.body.author;
+    var content     = req.body.content;
     var tweetTosave = {
-        author: req.body.author,
-        content: req.body.content
+        author: author,
+        content: content
     };
     
     // Query

@@ -1,8 +1,6 @@
-var express = require('express');
-var router  = express.Router();
-
-// Requiring controllers
-var tweetsCtrl = require(__dirname + '/tweets.controllers');
+var express    = require('express');
+var router     = express.Router();
+var tweetsCtrl = require('./tweets.controllers');
 
 // EndPoints
 router.get('/', tweetsCtrl.getAll);

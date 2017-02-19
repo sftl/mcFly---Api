@@ -1,12 +1,12 @@
-var mongoose   = require('mongoose');
+var mongoose    = require('mongoose');
 var tweetSchema = new mongoose.Schema({
 	author: {
 		type: String,
-		require: true
+		required: true
 	},
 	content: {
 		type: String,
-		require: true,
+		required: true,
 	},
     date: { 
         type: Date, 
@@ -18,4 +18,4 @@ var tweetSchema = new mongoose.Schema({
     }
 });
 
-mongoose.model('tweet', tweetSchema);
+module.exports = mongoose.model('tweet', tweetSchema);

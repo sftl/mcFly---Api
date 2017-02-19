@@ -1,6 +1,10 @@
 /**
  * 1 - Clean the distribution directory
  * 2 - Copy the files that are required for distribution
+ *
+ * var config = {
+ * 	"destination": 	string 		distribution path
+ * }
  */
 var config = require('../config.json').dist;
 var gulp   = require('gulp');
@@ -9,7 +13,7 @@ var clean  = require('gulp-clean');
 
 gulp.task('clean', () => {
 	return gulp.src(config.destination)
-	.pipe(clean())
+	.pipe(clean({force: true}));
 });
 
 gulp.task('dist', ['clean'], () => {
@@ -32,4 +36,8 @@ gulp.task('dist', ['clean'], () => {
 	// Root files
 	gulp.src(['app.js', 'package.json', 'readme.txt'])
 	.pipe(gulp.dest(config.destination));
-})
+
+	// Test files
+	gulp.src('test/**/*')
+	.pipe(gulp.dest(config.destination + '/test'));	
+});
