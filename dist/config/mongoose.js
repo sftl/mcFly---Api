@@ -20,7 +20,8 @@ var gracefulShutdown;
 
 module.exports = function(){
     // https://github.com/Automattic/mongoose/issues/4291
-    // mongoose.Promise = global.Promise;
+    // Deprecation Warning
+    mongoose.Promise = global.Promise;
     
     /**
      * Using multiple databases

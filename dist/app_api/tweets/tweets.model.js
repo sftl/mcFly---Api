@@ -18,4 +18,14 @@ var tweetSchema = new mongoose.Schema({
     }
 });
 
+tweetSchema.static('checkForConnection', checkForConnection);
+
 module.exports = mongoose.model('tweet', tweetSchema);
+
+/**
+ * [checkForConnection description]
+ * @return {[type]} [description]
+ */
+function checkForConnection(){
+	return mongoose.connection.readyState;
+}

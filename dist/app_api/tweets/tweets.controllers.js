@@ -1,11 +1,11 @@
 var mongoose = require('mongoose');
 var Tweet    = require("./tweets.model");
 var Module   = {
-    addNew: addNew,
-    getAll: getAll,
-    getFavorites: getFavorites,
-    getById: getById,
-    toggleFavorite: toggleFavorite,
+	addNew: addNew,
+	getAll: getAll,
+	getFavorites: getFavorites,
+	getById: getById,
+	toggleFavorite: toggleFavorite,
 };
 
 module.exports = Module;
@@ -16,21 +16,26 @@ module.exports = Module;
  * @param  object	res 	response
  * @return json
  */
-function addNew(req, res){
-    var author      = req.body.author;
-    var content     = req.body.content;
-    var tweetTosave = {
-        author: author,
-        content: content
-    };
-    
+function addNew(req, res){ 	
+ 	var author      = req.body.author;
+ 	var content     = req.body.content;
+ 	var tweetTosave = {
+ 		author: author,
+ 		content: content
+ 	};
+
+ 	// Check for DB connection
+   	if(!Tweet.checkForConnection()){
+ 		_dbConectionFailed(res);
+ 	}
+
     // Query
     Tweet.create(tweetTosave, function(err, tweet){
-		if(err){
-			_sendJsonResponse(res, 400, err);
-		}else{
-			_sendJsonResponse(res, 200, tweet);
-		}
+    	if(err){
+    		_sendJsonResponse(res, 400, err);
+    	}else{
+    		_sendJsonResponse(res, 200, tweet);
+    	}
     });
 }
 
@@ -41,24 +46,29 @@ function addNew(req, res){
  * @return json
  */
 function getAll(req, res){
+	// Check for DB connection
+ 	if(!Tweet.checkForConnection()){
+ 		_dbConectionFailed(res);
+ 	}
+
     // Query
     Tweet
-	.find()
+    .find()
     .sort({_id: -1})
-	.exec(function(err, tweets){
-		if(err){
-			_sendJsonResponse(res, 404, err);
-		}
+    .exec(function(err, tweets){
+    	if(err){
+    		_sendJsonResponse(res, 404, err);
+    	}
 
-		if(tweets.length === 0){
-			_sendJsonResponse(res, 404, {
-                "message": "There are no Tweets"
-			});
-			return;
-		}
+    	if(tweets.length === 0){
+    		_sendJsonResponse(res, 404, {
+    			"message": "There are no Tweets"
+    		});
+    		return;
+    	}
 
-		_sendJsonResponse(res, 200, tweets);
-	});
+    	_sendJsonResponse(res, 200, tweets);
+    });
 }
 
 /**
@@ -68,25 +78,30 @@ function getAll(req, res){
  * @return json
  */
 function getFavorites(req, res){
+ 	// Check for DB connection
+ 	if(!Tweet.checkForConnection()){
+ 		_dbConectionFailed(res);
+ 	}
+
     // Query
-	Tweet
-	.find({favorite: true})
+    Tweet
+    .find({favorite: true})
     .sort({_id: -1})
-	.exec(function(err, tweets){
-        if(err){
-			_sendJsonResponse(res, 404, err);
-			return;
-		}
+    .exec(function(err, tweets){
+    	if(err){
+    		_sendJsonResponse(res, 404, err);
+    		return;
+    	}
 
-        if(tweets.length === 0){
-			_sendJsonResponse(res, 404, {
-                "message": "There are no favorites"
-			});
-			return;
-		}
+    	if(tweets.length === 0){
+    		_sendJsonResponse(res, 404, {
+    			"message": "There are no favorites"
+    		});
+    		return;
+    	}
 
-		_sendJsonResponse(res, 200, tweets);
-	});
+    	_sendJsonResponse(res, 200, tweets);
+    });
 }
 
 /**
@@ -96,9 +111,14 @@ function getFavorites(req, res){
  * @return json
  */
 function getById(req, res){
+ 	var tweetId = req.params.id;
+
+ 	// Check for DB connection
+ 	if(!Tweet.checkForConnection()){
+ 		_dbConectionFailed(res);
+ 	}
 
 	// Check for params
-    var tweetId = req.params.id;
 	if(!req.params || !tweetId){
 		_sendJsonResponse(res, 404, {
 			"message": "TweetId required"
@@ -135,38 +155,44 @@ function getById(req, res){
  * @return json 	
  */
 function toggleFavorite(req, res){
+ 	var tweetId = req.params.id;
+
+ 	// Check for DB connection
+ 	if(!Tweet.checkForConnection()){
+ 		_dbConectionFailed(res);
+ 	}
+
     // Check for params
-	var tweetId = req.params.id;
     if(!tweetId){
-		_sendJsonResponse(res, 404, {
-			message: "Tweet is required"
-		});
-		return;
-	}
+    	_sendJsonResponse(res, 404, {
+    		message: "Tweet is required"
+    	});
+    	return;
+    }
 
     // Query
-	Tweet
-	.findById(tweetId)
-	.exec(function(err, tweet){
-        if(!tweet){
-			_sendJsonResponse(res, 404, {
-				message: "Tweet not found"
-			});
-			return;
-		}else if(err){
-			_sendJsonResponse(res, 400, err);
-			return;
-		}
+    Tweet
+    .findById(tweetId)
+    .exec(function(err, tweet){
+    	if(!tweet){
+    		_sendJsonResponse(res, 404, {
+    			message: "Tweet not found"
+    		});
+    		return;
+    	}else if(err){
+    		_sendJsonResponse(res, 400, err);
+    		return;
+    	}
 
-        tweet.favorite = !tweet.favorite;
-        tweet.save(function(err, tweet){
-			if(err){
-				_sendJsonResponse(res, 404, err);
-			}else{
-				_sendJsonResponse(res, 200, tweet);
-			}
-		});
-	})
+    	tweet.favorite = !tweet.favorite;
+    	tweet.save(function(err, tweet){
+    		if(err){
+    			_sendJsonResponse(res, 404, err);
+    		}else{
+    			_sendJsonResponse(res, 200, tweet);
+    		}
+    	});
+    })
 }
 
 /**
@@ -176,7 +202,13 @@ function toggleFavorite(req, res){
  * @param  object   content Data returned as JSON
  * @return json
  */
-var _sendJsonResponse = function(res, status, content){
-	res.status(status);
-	res.json(content);
-}
+ var _sendJsonResponse = function(res, status, content){
+ 	res.status(status);
+ 	res.json(content);
+ }
+
+ var _dbConectionFailed = function(res){
+ 	_sendJsonResponse(res, 503, {
+ 		message: 'database connection failed'
+ 	});
+ } 
