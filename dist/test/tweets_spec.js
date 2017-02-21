@@ -10,8 +10,6 @@ let chaiHttp         = require('chai-http');
 let server           = require('../app');
 let should           = chai.should();
 
-
-//mongoose.Promise = global.Promise; 
 chai.use(chaiHttp);
 
 describe('tweets API', () => {
@@ -94,41 +92,6 @@ describe('tweets API', () => {
 					res.body.should.have.property('favorite');
 					res.body.should.have.property('date');
 					res.body.should.have.property('_id').eql(tweet.id);
-					done();
-				});
-			});
-		});
-	});
-
-  	/**
-	 * Test the /GET/:id tweet route
-	 */
-	describe('/GET/favorites tweet', () => {
-		it('It should get all tweets which "favorite" key is TRUE', (done) => {
-			let tweets = [
-				{
-					author: "favorite FALSE",
-					content: "favorite FALSE"
-				},
-				{
-					author: "favorite TRUE",
-					content: "favorite TRUE",
-					favorite: true
-				}
-			];
-
-			Tweet.create(tweets, (err, tweets) => {
-				chai.request(server)
-				.get('/api/tweets/favorites')
-				.end((err, res) => {
-					res.should.have.status(200);
-					res.body.should.be.an('array');
-					res.body.should.have.lengthOf(1);
-					res.body[0].should.have.property('_id');
-					res.body[0].should.have.property('author');
-					res.body[0].should.have.property('content');
-					res.body[0].should.have.property('favorite').eql(true);
-					res.body[0].should.have.property('date');
 					done();
 				});
 			});
