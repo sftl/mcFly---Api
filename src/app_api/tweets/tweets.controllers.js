@@ -1,4 +1,4 @@
-var mongoose = require('mongoose');
+ var mongoose = require('mongoose');
 var Tweet    = require("./tweets.model");
 var Module   = {
 	addNew: addNew,
